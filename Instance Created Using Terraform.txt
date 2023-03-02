@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+    
+    tools{
+        terraform 'Terraform'
+    }
+    stages{
+        stage('Checkout from git'){
+          steps{
+           git branch: 'main', credentialsId: 'JenkinsSplunk', url: 'https://github.com/abhirana211098/TerraformJenkins.git'
+        }
+    }
+    stage('init'){
+          steps{
+            sh 'terraform init'
+        }
+    }
+    stage('apply'){
+          steps{
+            sh 'terraform apply --auto-approve'
+        }
+    }
+}
+}
