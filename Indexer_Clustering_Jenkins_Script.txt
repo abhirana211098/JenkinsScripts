@@ -1,0 +1,15 @@
+pipeline{
+    agent any
+    stages{
+        stage('SCM Checkout'){
+            steps{
+                git branch: 'main', credentialsId: 'JenkinsSplunk', url: 'https://github.com/abhirana211098/AnisbleJenkins.git'
+            }
+        }
+        stage('Execute Ansible'){
+            steps{
+                ansiblePlaybook credentialsId: 'IndexerCluster', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts.inv', playbook: 'Indexer_Cluster.yml'
+            }
+        }
+    }
+}
